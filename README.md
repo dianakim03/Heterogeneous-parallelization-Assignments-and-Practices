@@ -1,4 +1,6 @@
 # Heterogeneous-parallelization-Assignments-and-Practices
+## Diana Kim ADA-2403M
+
 This repository contains: Practices 1-10 and Assignments 1–4
 
 
