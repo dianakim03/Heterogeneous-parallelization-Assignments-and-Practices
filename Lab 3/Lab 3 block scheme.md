@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     A(start) --> B(set_sizes)
     B --> C(print_sizes)
