@@ -1,0 +1,44 @@
+```mermaid
+flowchart TD
+A([Start]);
+B[MPI_Init];
+C[Get rank and size];
+D{Strong or Weak mode?};
+E[Compute global N];
+F{Rank is 0?};
+G[Create and fill full array];
+H[No full array];
+I[Compute counts and displs];
+J[Create local array];
+K[Barrier and start timer];
+L[Scatterv full to local];
+M[Local sum min max];
+N[Reduce to root];
+O[Allreduce to all];
+P[Stop timer];
+Q{Rank is 0?};
+R[Print results];
+S[MPI_Finalize];
+T([End]);
+
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F -- Yes --> G;
+F -- No --> H;
+G --> I;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+L --> M;
+M --> N;
+N --> O;
+O --> P;
+P --> Q;
+Q -- Yes --> R;
+Q -- No --> S;
+R --> S;
+S --> T;
