@@ -1,0 +1,48 @@
+```mermaid
+flowchart TD
+A([Start]);
+B[Read N and chunks];
+C[Split array into CPU and GPU parts];
+D[Allocate pinned host memory];
+E[Allocate device memory];
+F[Create CUDA streams];
+G[Profile H2D only];
+H[Profile kernel only];
+I[Profile D2H only];
+J[Start wall time];
+K{Run CPU and GPU in parallel};
+L[CPU processes first half];
+M[GPU processes second half in chunks];
+N{Chunks remaining?};
+O[MemcpyAsync H2D];
+P[Launch kernel];
+Q[MemcpyAsync D2H];
+R[Synchronize streams];
+S[End wall time];
+T[Print results];
+U[Free memory and streams];
+V([End]);
+
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G --> H;
+H --> I;
+I --> J;
+J --> K;
+K --> L;
+K --> M;
+M --> N;
+N -- Yes --> O;
+O --> P;
+P --> Q;
+Q --> N;
+N -- No --> R;
+L --> S;
+R --> S;
+S --> T;
+T --> U;
+U --> V;
