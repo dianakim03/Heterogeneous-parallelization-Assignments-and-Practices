@@ -1,28 +1,42 @@
 ```mermaid
 flowchart TD
-    A([Start]) --> B[Прочитать N, threads, reps]
-    B --> C[Создать массив a[N]]
-    C --> D[Заполнить массив случайными числами]
+    A([Start])
+    B[Read N, threads, reps]
+    C[Create array a[N]]
+    D[Fill array with random values]
+    E[Warm-up: calc_seq and calc_omp]
+    F[Initialize t_seq]
+    G{Reps finished?}
+    H[Run calc_seq and measure time]
+    I[Compute average t_seq]
+    J[Initialize t_omp]
+    K{Reps finished?}
+    L[Run calc_omp with reduction]
+    M[Compute average t_omp]
+    N[Compute speedup]
+    O[Estimate serial and parallel parts]
+    P[Compute mean, variance, stddev]
+    Q[Check correctness]
+    R[Print results]
+    S([End])
 
-    D --> E[Прогрев вычислений]
-    E --> F1[calc_seq]
-    E --> F2[calc_omp]
-
-    F1 --> G[Инициализировать t_seq = 0]
-    G --> H{reps выполнены?}
-    H -->|Нет| I[Замер времени calc_seq]
-    I --> G
-    H -->|Да| J[Среднее t_seq]
-
-    J --> K[Инициализировать t_omp = 0]
-    K --> L{reps выполнены?}
-    L -->|Нет| M[parallel for + reduction]
-    M --> K
-    L -->|Да| N[Среднее t_omp]
-
-    N --> O[Вычислить speedup]
-    O --> P[Оценить serial_part и parallel_part]
-    P --> Q[Вычислить mean, var, std]
-    Q --> R[Проверить корректность суммы]
-    R --> S[Вывести результаты]
-    S --> T([End])
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G -- No --> H
+    H --> G
+    G -- Yes --> I
+    I --> J
+    J --> K
+    K -- No --> L
+    L --> K
+    K -- Yes --> M
+    M --> N
+    N --> O
+    O --> P
+    P --> Q
+    Q --> R
+    R --> S
