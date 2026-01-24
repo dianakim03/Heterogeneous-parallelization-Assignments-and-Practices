@@ -1,4 +1,5 @@
-# Practice 8 — CPU(OpenMP) vs GPU(CUDA) vs Hybrid
+# Practice 8 — Разработка гибридного приложения для CPU и GPU
+
 
 ## Цель
 1) Реализовать обработку массива на CPU с OpenMP (умножение на 2)  
