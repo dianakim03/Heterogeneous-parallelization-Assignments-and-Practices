@@ -1,16 +1,52 @@
 ```mermaid
 flowchart TD
-    A(["Start"]) --> B["Прочитать N, iters"]
-    B --> C["Создать host массив h_in[N]"]
-    C --> D["cudaMalloc d_in и d_out"]
-    D --> E["Memcpy H->D"]
-    E --> F["Замер coalesced через cudaEvent"]
-    F --> G["k_coalesced: out[i]=in[i]*2"]
-    G --> H["Замер uncoalesced через cudaEvent"]
-    H --> I["k_uncoalesced: i=perm(tid)"]
-    I --> J["Замер shared_fix через cudaEvent"]
-    J --> K["k_shared_fix: coalesced load -> shared -> perm read"]
-    K --> L["Проверка: сравнить первые 1000 элементов"]
-    L --> M["Вывести времена и check"]
-    M --> N["cudaFree d_in/d_out"]
-    N --> O(["End"])
+A([Start]);
+B[Read N and iters];
+C[Create host array];
+D[Allocate device memory];
+E[Copy H to D];
+F[Measure coalesced];
+G{Iters done?};
+H[Run coalesced kernel];
+I[Save coalesced time];
+J[Measure uncoalesced];
+K{Iters done?};
+L[Run uncoalesced kernel];
+M[Save uncoalesced time];
+N[Measure shared_fix];
+O{Iters done?};
+P[Run shared_fix kernel];
+Q[Save shared_fix time];
+R[Copy first elements to host];
+S{Outputs equal?};
+T[Print timings OK];
+U[Print error];
+V[Free memory];
+W([End]);
+
+A --> B;
+B --> C;
+C --> D;
+D --> E;
+E --> F;
+F --> G;
+G -- No --> H;
+H --> G;
+G -- Yes --> I;
+I --> J;
+J --> K;
+K -- No --> L;
+L --> K;
+K -- Yes --> M;
+M --> N;
+N --> O;
+O -- No --> P;
+P --> O;
+O -- Yes --> Q;
+Q --> R;
+R --> S;
+S -- Yes --> T;
+S -- No --> U;
+T --> V;
+U --> V;
+V --> W;
